@@ -5,11 +5,15 @@ class Enemy{
   int count;
   boolean alive;
   float size;
+  float randomSeed;
+  float noiseStep;
   
   
   Enemy() {
     init();
     x= random(width);
+    randomSeed = random(1000);
+    noiseStep = 0.05;
   }
       
   void init() {
@@ -21,7 +25,11 @@ class Enemy{
   }
   
   void drawMe(){
-    x-=speed;
+    randomSeed += noiseStep;
+    
+    x -= speed;
+    y += 8 * (1 - 2 * noise(randomSeed));
+    
     if(x<=0){
       fill(255);
       init();
